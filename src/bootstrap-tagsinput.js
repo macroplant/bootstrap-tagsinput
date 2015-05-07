@@ -349,12 +349,17 @@
 
         if (self.options.addOnBlur && self.options.freeInput) {
           self.$input.on('focusout', $.proxy(function(event) {
+            // REMOVED HACK - @mattboldt - 4/7/2015
+            self.add(self.$input.val());
               // HACK: only process on focusout when no typeahead opened, to
               //       avoid adding the typeahead text as tag
-              if ($('.typeahead, .twitter-typeahead', self.$container).length === 0) {
-                self.add(self.$input.val());
-                self.$input.val('');
-              }
+              // if ($('.typeahead, .twitter-typeahead', self.$container).length === 0) {
+                  // self.add(self.$input.val());
+                // self.$input.val('');
+              // }
+          }, self));
+          self.$input.on('blur', $.proxy(function(event) {
+            self.$input.val('');
           }, self));
         }
 
